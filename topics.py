@@ -9,7 +9,6 @@ from scipy.special import expit
 MODEL = f"cardiffnlp/tweet-topic-21-multi"
 tokenizer = AutoTokenizer.from_pretrained(MODEL)
 
-
 model = AutoModelForSequenceClassification.from_pretrained(MODEL)
 class_mapping = model.config.id2label
 
@@ -31,6 +30,13 @@ for i, d in tqdm(enumerate(debaters)):
     for c in tqdm(d["comments"]):
         text = c["text"]
         tokens = tokenizer(text, return_tensors='pt')
+
+        # truncate
+        if tokens["attention_mask"][0].shape[0] > 512:
+            print("truncating tokens")
+            tokens["input_ids"] = tokens["input_ids"][:,:512]
+            tokens["attention_mask"] = tokens["attention_mask"][:,:512]
+
         output = model(**tokens)
         scores = output[0][0].detach().numpy()
         all_scores.append(scores)
