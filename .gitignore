@@ -5,3 +5,7 @@
 
 # Huge datasets
 debaters/*
+
+*.zip
+own-*
+bert_paper_model/*
