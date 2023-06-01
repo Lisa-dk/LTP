@@ -2,6 +2,7 @@ import json
 from tqdm import tqdm
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import numpy as np
+import torch
 
 def load_json(path):
     with open(path) as f:
@@ -9,12 +10,19 @@ def load_json(path):
     return data
 
 debaters = load_json("debaters/debaters.jsonl")
+print("Number of debaters:", len(debaters))
 
 model_name = "nikolai40/human-values-roberta-aug"
 tok_name = "roberta-base"
 
 model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=20)
 tokenizer = AutoTokenizer.from_pretrained(tok_name)
+
+if torch.cuda.is_available():
+    model = model.to('cuda')
+    print("\nCuda setup was successful.\n")
+else:
+    print("\nCould not find cuda!\n")
 
 def encode(str_input):
     return tokenizer(str_input, truncation=True)
@@ -27,6 +35,8 @@ for i, d in tqdm(enumerate(debaters)):
         text = c["text"]
         tokens = tokenizer(text, return_tensors='pt')
 
+        # tokens = tokens.to('cuda') # this line you added right?
+
         # truncate
         if tokens["attention_mask"][0].shape[0] > 512:
             print("truncating tokens")
@@ -35,8 +45,8 @@ for i, d in tqdm(enumerate(debaters)):
 
         output = model(**tokens)
         scores = output[0][0].detach().numpy()
-        scores_softmax = np.exp(scores) / sum(np.exp(scores))
-        results.append(scores_softmax)
+        #scores_softmax = np.exp(scores) / sum(np.exp(scores)) # this line was so so so so dumb
+        results.append(scores)
 
 results = np.array(results)
-np.save("all_values.npy", results)
+np.save("all_values_correct.npy", results)
