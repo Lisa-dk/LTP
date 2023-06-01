@@ -11,8 +11,8 @@ Authors:
  - [Models for human values classification](values_classification.ipynb)
     - Language models for multi-label classification
     - Language models for masked prediction
+
+     ![alt text](plots\results.png)
  - [Applying a fine-tuned model for topic prediction](topics.py)
  - [An analysis on the distribution of human values across different topics](value_topic_analysis.ipynb)
-
-
-![alt text](value_topic_heatmap.png)
+   \![alt text](plots\pic.png)
