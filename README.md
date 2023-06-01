@@ -15,6 +15,6 @@ Authors:
      ![alt text](plots\results.png)
  - [Applying a fine-tuned model for topic prediction](topics.py)
  - [An analysis on the distribution of human values across different topics](value_topic_analysis.ipynb)
-   ![alt text](plots\pic.png)
+   \![alt text](plots\pic.png)
 
 
