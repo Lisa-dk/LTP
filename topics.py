@@ -21,7 +21,7 @@ def load_json(path):
     return data
 
 
-debaters = load_json("debaters/debaters.jsonl")
+debaters = load_json("debaters.jsonl")
 
 all_scores = []
 
@@ -41,6 +41,5 @@ for i, d in tqdm(enumerate(debaters)):
         scores = output[0][0].detach().numpy()
         all_scores.append(scores)
 
-all_scores = np.array(all_scores)
-print(all_scores)
-np.save('all_scores.npy', all_scores)
+all_scores_np = np.array(all_scores)
+np.save('all_scores.npy', all_scores_np)
