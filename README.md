@@ -13,6 +13,6 @@ Authors:
     - Language models for masked prediction
 
      ![alt text](plots/results.png)
- - [Applying a fine-tuned model for topic prediction](topics.py)
+ - [Applying a fine-tuned model for topic prediction](model_train_predict)
  - [An analysis on the distribution of human values across different topics](value_topic_analysis.ipynb)
    ![alt text](plots/pic.png)
